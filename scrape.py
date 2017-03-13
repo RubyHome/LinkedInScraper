@@ -272,3 +272,32 @@ def scrape_page(driver, **kwargs):
     # except Exception as e:
     #     print("data could not be printed to console\n")
     return data
+
+
+def company(driver):
+    """return company insights, number of employees and average tenure"""
+    try:
+        stats_selector = "ul.company-growth-stats.stats-list li"
+        company_stats  = driver.find_elements_by_css_selector(stats_selector)
+        company_info   = [stat.text for stat in company_stats]
+    except Exception as e:
+        print("error acquiring company info")
+        print(e)
+    else:
+        try:
+            employees     = list(filter(lambda text: 'employees' in text, company_info))
+            num_employees = ''.join(list(filter(lambda c: c.isdigit(), employees[0])))
+        except Exception as e:
+            num_employees = ""
+            pass
+        try:
+            tenure        = list(filter(lambda text: 'tenure' in text, company_info))
+            avg_tenure    = ''.join(list(filter(lambda c: c in '0123456789.', tenure[0])))
+        except Exception as e:
+            avg_tenure    = ""
+            pass
+        company_info  = {
+            "avg_tenure"    : avg_tenure, 
+            "num_employees" : num_employees
+        }
+    return {"avg_tenure" : avg_tenure, "num_employees" : num_employees}

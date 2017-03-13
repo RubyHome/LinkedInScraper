@@ -60,6 +60,13 @@ def parse_command_line_args():
         specify a filename to which data will be written. Defaults to
         'output.txt'
         """)
+    # parser.add_argument('--salary_range', type=str, default=search_keys['salary_range'], nargs='?', 
+    #     help="""
+    #     set a minimum salary requirement. Possible input values are:
+    #     All, 40+, 60+, 80+, 100+, 120+, 140+, 160+, 180+, 200+. Defaults
+    #     to All.
+    #     """)
+    
     return vars(parser.parse_args())
 
 if __name__ == "__main__":
